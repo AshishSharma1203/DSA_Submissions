@@ -27,7 +27,7 @@ public:
         int overall_sum=root->val+lmax+rmax;  // leftmax+rightmax+root->val path
         
         
-        // now return max psooible value of path 
+        // now update ans with  max possible value of path 
         
         ans= max(ans,max(root->val,max(overall_sum,max(lmx_root,rmx_root))));
         
