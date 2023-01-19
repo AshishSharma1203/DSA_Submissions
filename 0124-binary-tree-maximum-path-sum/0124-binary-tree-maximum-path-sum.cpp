@@ -19,16 +19,20 @@ public:
             return 0;
         }
         
-        int lmax=solve(root->left,ans);
-        int rmax=solve(root->right,ans);
+        int lmax=solve(root->left,ans); // left side max value 
+        int rmax=solve(root->right,ans); //right siide max value
         
-        int lmx_root=max(root->val,(root->val+lmax));
-        int rmx_root=max(root->val,(root->val+rmax));
-        int overall_sum=root->val+lmax+rmax;
+        int lmx_root=max(root->val,(root->val+lmax)); //leftmax+root-value  path
+        int rmx_root=max(root->val,(root->val+rmax)); //rightmax+root-value path
+        int overall_sum=root->val+lmax+rmax;  // leftmax+rightmax+root->val path
         
-     ans= max(ans,max(root->val,max(lmx_root,max(rmx_root,overall_sum))));
-         // ans=max(ans ,(max(root->val,lmax+rmax+root->val)));
-        // return root->val + max(lmax,rmax);
+        
+        // now return max psooible value of path 
+        
+        ans= max(ans,max(root->val,max(overall_sum,max(lmx_root,rmx_root))));
+        
+        // now return max of root node only  or rootnode +any left or side path 
+        
         return max(root->val,root->val+max(lmax,rmax));
         
     }
