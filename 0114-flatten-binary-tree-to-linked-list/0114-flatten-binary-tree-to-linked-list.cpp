@@ -11,30 +11,32 @@
  */
 class Solution {
 public:
-    
-    void solve(TreeNode* root, vector<int> &preorder)
-    {
-        if(root==NULL)  return ;
-        preorder.push_back(root->val);
-        solve(root->left,preorder);
-        solve(root->right,preorder);
-    }
-    
     void flatten(TreeNode* root) {
         
-        if(root==NULL) return ;
+        if(root==NULL || (root->left==NULL && root->right==NULL) ) return;  
         
-        vector<int> preorder;
-        solve(root,preorder);
-        TreeNode* curr=root;
+        TreeNode * curr= root;
         
-        for(int i=0;i<preorder.size()-1;i++)
+        while(curr!=NULL) 
         {
-            curr->left=NULL;
-            curr->right=new TreeNode (preorder[i+1]);
-            curr=curr->right;
+            if(curr->left==NULL)
+            {
+                curr=curr->right;
+            }
+            else
+            {
+                TreeNode* precedecessor= curr->left;
+                while(precedecessor->right!=NULL) 
+                {
+                    precedecessor=precedecessor->right;
+                }
+                precedecessor->right=curr->right;
+                TreeNode* temp=curr->left;
+                curr->left=NULL;
+                curr->right=temp;
+                curr=curr->right;
+            }
         }
-        
         return ;
     }
 };
