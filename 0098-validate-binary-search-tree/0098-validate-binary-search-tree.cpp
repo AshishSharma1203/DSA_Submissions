@@ -12,24 +12,26 @@
 class Solution {
 public:
     
-     void solve (TreeNode * curr, vector<int> &inorder)
+    bool solve(TreeNode* root,long low,long high)
     {
-        if(curr==NULL)
-            return;
-        solve(curr->left,inorder);
-        inorder.push_back(curr->val);
-        solve(curr->right,inorder);
+        if(root==NULL) return true;
+    
+    // if(root->left==NULL && root->right==NULL)
+    //     return true;
+    
+        
+        bool left_flag=solve(root->left,low,root->val);
+        bool right_flag=solve(root->right,root->val,high);
+        
+        return left_flag && right_flag && (root->val>low && root->val<high);
+        
     }
     
     bool isValidBST(TreeNode* root) {
-        vector<int> inorder;
-        solve(root,inorder);
+     long low=LONG_MIN,high=LONG_MAX;
+    
+        bool ans=solve(root,low,high);
         
-        for(int i=0;i<inorder.size()-1;i++)
-        {
-            if(inorder[i]>=inorder[i+1])
-                return false;
-        }
-        return true;
+        return ans; 
     }
 };
