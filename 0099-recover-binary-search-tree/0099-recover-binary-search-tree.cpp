@@ -11,37 +11,47 @@
  */
 class Solution {
 public:
+     bool flag=false;
+     TreeNode* i1=NULL,*i2=NULL,*prev;
     
-    void solve(TreeNode* root,vector<TreeNode*> &inorder)
+   void  solve(TreeNode* curr)
+       
     {
-        if(root==NULL)  return ; 
-        solve(root->left,inorder);
-        inorder.push_back(root);
-        solve(root->right,inorder);
+        if(curr==NULL) return ;
+        
+        solve(curr->left);
+        
+        // check if it is not the extreme left leaf node 
+       
+            if(curr->val<prev->val)
+            {
+              if(flag==false)  // this is first irregurality in inorder ascending order
+              {
+                  i1=prev;
+                  i2=curr;
+                  flag=true;
+                
+              }
+                
+                else    // this is second  irregurality in inorder ascending order
+                {
+                    i2=curr;
+                    return ; 
+                }
+            }
+       prev=curr;
+        
+        solve(curr->right);
+        
     }
     
-    void recoverTree(TreeNode* root) {
-        if(root==NULL ||( root->left==NULL && root->right==NULL)) return ;
-        vector<TreeNode*> inorder;
-        solve(root,inorder);
-        
-      TreeNode* first,*second;
-        
-           for(int i=0;i<inorder.size()-1;i++){
-            if(inorder[i]->val > inorder[i+1]->val){
-                first = inorder[i];
-                break;
-            }
-        }
-        for(int i=inorder.size()-1;i>=0;i--){
-            if(inorder[i]->val < first->val){
-                second = inorder[i];
-                break;
-            }
-        }
-        swap(first->val,second->val);
-     
-        return ;
+   void recoverTree(TreeNode* root) {
+        TreeNode*curr;
+        prev = new TreeNode(INT_MIN);
+        curr=root;
+        solve(curr);
+        swap(i1->val,i2->val);
+        return; 
         
     }
 };
