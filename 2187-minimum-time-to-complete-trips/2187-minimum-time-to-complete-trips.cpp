@@ -2,6 +2,7 @@ class Solution
 {
     public:
 
+       	// function to find min value in the array
         void find(vector<int> &time, long long int &low)
         {
 
@@ -9,14 +10,13 @@ class Solution
             {
 
                 if (time[i] < low) low = time[i];
-               	// high=max(high,time[i]);
             }
         }
 
     bool check(vector<int> &time, long long int mid, int totalTrips)
     {
 
-      long long   int count = 0;
+        long long int count = 0;
 
         for (int i = 0; i < time.size(); i++)
         {
@@ -34,13 +34,17 @@ class Solution
 
         find(time, low);
         long long int high = totalTrips * low;
-
         long long int ans = totalTrips * low;
+
+       	// apply binary search algorithm 
 
         while (low <= high)
         {
             long long int mid = low + (high - low) / 2;
+           	// check whether the curr value i.e. mid is accepted or not 
+
             bool flag = check(time, mid, totalTrips);
+
             if (flag == true)
             {
                 ans = min(ans, mid);
@@ -51,6 +55,7 @@ class Solution
                 low = mid + 1;
             }
         }
+
         return ans;
     }
 };
