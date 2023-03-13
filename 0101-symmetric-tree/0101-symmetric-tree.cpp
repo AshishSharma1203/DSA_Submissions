@@ -1,35 +1,33 @@
 /**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
+ *Definition for a binary tree node.
+ *struct TreeNode {
+ *  int val;
+ *  TreeNode * left;
+ *  TreeNode * right;
+ *  TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *  TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *  TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ *};
  */
-class Solution {
-public:
-    
-    bool check(TreeNode* curr1, TreeNode * curr2)
-    {
-        if(curr1==NULL || curr2==NULL )
+class Solution
+{
+    public:
+
+        bool check(TreeNode *root1, TreeNode *root2)
         {
-            return curr1==curr2;
+            // check whether the roots are NULL ? 
+            if (root1 == NULL || root2 == NULL)
+            {
+                return root1 == root2;
+            }
+         // check whether current value of both root matches or not ? Also whether the children nodes are symmetric or not ? 
+            return root1->val == root2->val && check(root1->left, root2->right) && check(root1->right, root2->left);
         }
-        
-        return curr1->val==curr2->val && check(curr1->left, curr2->right) && check(curr1->right,curr2->left);
-        
-    }
-    
-    bool isSymmetric(TreeNode* root) {
-       if(root==NULL)
-       {
-           return true;
-       }
-        bool ans= check(root->left, root->right);
-        
-        return ans; 
+
+    bool isSymmetric(TreeNode *root)
+    {
+        if (root == NULL) return true;
+
+        return check(root->left, root->right);
     }
 };
