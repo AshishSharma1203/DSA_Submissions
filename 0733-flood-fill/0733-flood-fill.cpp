@@ -25,7 +25,7 @@ public:
                     {
                         int row = x + dx[j];
                         int col = y + dy[j];
-                        if (row >= 0 && row < m && col >= 0 && col < n && image[row][col] == precolor)
+                        if (row >= 0 && row < m && col >= 0 && col < n && image[row][col] == precolor &&image[row][col]!=color)
                         {
                             image[row][col] = color;
                             q.push({row,col});
@@ -40,7 +40,7 @@ public:
         
         int m=image.size(),n=image[0].size();
         
-        if(image[sr][sc]==color)  return image;
+        // if(image[sr][sc]==color)  return image;
         int precolor=image[sr][sc];
         
         image[sr][sc]=color;
