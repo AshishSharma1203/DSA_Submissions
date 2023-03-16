@@ -40,7 +40,7 @@ public:
         
         int m=image.size(),n=image[0].size();
         
-        // if(image[sr][sc]==color)  return image;
+        if(image[sr][sc]==color)  return image;
         int precolor=image[sr][sc];
         
         image[sr][sc]=color;
