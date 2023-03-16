@@ -12,36 +12,36 @@
 class Solution {
 public:
     
-    TreeNode* solve(vector<int>& inorder,int inStart,int inEnd, vector<int>& postorder,int postStart,int                           postEnd,  unordered_map<int,int> &m)
-         
+    
+    
+    TreeNode* solve(vector<int>&inorder,vector<int>&postorder,int inStart,int inEnd,int postStart,int postEnd, unordered_map<int,int> &mp)
     {
- 
         if(inStart>inEnd || postStart>postEnd)  return NULL;
         
-        TreeNode* root=new TreeNode (postorder[postEnd]);
-        
-        int index=m[root->val];
-        int element=inEnd-index;
-        
-        root->left=solve(inorder,inStart,index-1,postorder,postStart,postEnd-element-1,m);
-        root->right=solve(inorder,index+1,inEnd,postorder,postEnd-element,postEnd-1,m);
-        
+        TreeNode* root=new TreeNode(postorder[postEnd]);
+        int index=mp[root->val];
+        int elements=inEnd-index;
+        root->left=solve(inorder,postorder,inStart,index-1,postStart,postEnd-elements-1,mp);
+        root->right=solve(inorder,postorder,index+1,inEnd,postEnd-elements,postEnd-1,mp);
         
         return root;
-    
-    
     }
     
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
         
-        int inStart=0,inEnd=inorder.size()-1,postStart=0,postEnd=postorder.size()-1;
+       
+         unordered_map<int,int> mp;
+        int n=inorder.size(),m=postorder.size();
         
-        unordered_map<int,int> m;
+        for(int i=0;i<n;i++)
+        {
+            
+             mp.insert({inorder[i],i});
+        }
         
-        for(int i=0;i<=inEnd;i++)
-            m.insert({inorder[i],i});
+        int inStart=0,inEnd=n-1,postStart=0,postEnd=m-1;
         
-        TreeNode* root=solve(inorder,inStart,inEnd,postorder,postStart,postEnd,m);
+        TreeNode*root= solve(inorder,postorder,inStart,inEnd,postStart,postEnd,mp);
         
         return root;
         
