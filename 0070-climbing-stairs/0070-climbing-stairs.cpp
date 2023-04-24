@@ -12,6 +12,8 @@ public:
         
 //     }
     
+    // memoization approach -------->>>> 
+    
 //     int solve(int n,vector<int> &dp)
 //     {
 //         if(n==0 || n==1) 
@@ -34,6 +36,9 @@ public:
       
 //     }
     
+    
+    // tabulation approach ---------->>>>>>>>>>
+    
       int climbStairs(int n) {
      
         if(n==0 || n==1) return 1;
@@ -47,5 +52,7 @@ public:
           return dp[n];
         
     }
+    
+    
     
 };
