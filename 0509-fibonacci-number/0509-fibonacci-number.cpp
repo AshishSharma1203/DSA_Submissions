@@ -13,7 +13,7 @@ public:
 //     }
     
     
-    // memoization approach 
+    // memoization approach (top-down approach)
     
 //     int  solve(int n, vector<int> & dp)
 //     {
@@ -53,11 +53,7 @@ public:
         }
         
         return dp[n];
-         
-  
-
- 
-        
+   
     }
     
 };
