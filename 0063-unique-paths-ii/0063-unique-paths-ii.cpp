@@ -19,6 +19,8 @@ public:
             
 //     }
     
+    // memoization approach 
+    
     int solve(int i,int j, int m,int n, vector<vector<int>>& grid, vector<vector<int>>& dp)
     {
 
@@ -43,9 +45,45 @@ public:
         
         int m=obstacleGrid.size(), n= obstacleGrid[0].size();
         
-        vector<vector<int>> dp(m,vector<int> (n,-1));
+//         vector<vector<int>> dp(m,vector<int> (n,-1));
         
-        return solve(0,0,m,n,obstacleGrid,dp);
+//         return solve(0,0,m,n,obstacleGrid,dp);
         
+         // tabulation approach 
+
+    
+    vector<vector<int>> dp(m, vector<int>(n, 0));
+    
+    // base case: dp[0][0] = 1 if there is no obstacle in the starting cell
+    if (obstacleGrid[0][0] == 0) {
+        dp[0][0] = 1;
     }
+    
+    // base case: dp[i][0] = 1 if there is no obstacle in the first column, and all cells below it are reachable
+    for (int i = 1; i < m; i++) {
+        if (obstacleGrid[i][0] == 0 && dp[i-1][0] == 1) {
+            dp[i][0] = 1;
+        }
+    }
+    
+    // base case: dp[0][j] = 1 if there is no obstacle in the first row, and all cells to the right of it are reachable
+    for (int j = 1; j < n; j++) {
+        if (obstacleGrid[0][j] == 0 && dp[0][j-1] == 1) {
+            dp[0][j] = 1;
+        }
+    }
+    
+    // fill the rest of the dp array
+    for (int i = 1; i < m; i++) {
+        for (int j = 1; j < n; j++) {
+            if (obstacleGrid[i][j] == 0) {
+                dp[i][j] = dp[i-1][j] + dp[i][j-1];
+            }
+        }
+    }
+    
+    return dp[m-1][n-1];
+}
+
+  
 };
