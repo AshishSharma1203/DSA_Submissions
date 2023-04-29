@@ -49,6 +49,8 @@ public:
         
         vector<vector<int>> dp(m,vector<int> (n,0));
         
+        // for single row or single col there is only 1 way to reach there by only travelling right ( for single row ) & 
+        //     by only travelling down ( for single col ) --> used the concept of how Aditya verma used to fil the matrix 
         for(int i=0;i<m;i++)
             dp[i][0]=1;
         for(int j=0;j<n;j++)
