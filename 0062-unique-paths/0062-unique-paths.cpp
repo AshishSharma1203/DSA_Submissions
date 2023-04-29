@@ -60,7 +60,7 @@ public:
         {
             for(int j=1;j<n;j++)
             {
-              // dp[i][j]= sum of ways to reach its adjacent left cel + up cell 
+              // dp[i][j]= sum of ways to reach its adjacent left cell + upward cell 
                 dp[i][j]= dp[i][j-1] + dp[i-1][j];
             }
         }
