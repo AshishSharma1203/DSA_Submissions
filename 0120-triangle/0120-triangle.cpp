@@ -26,6 +26,8 @@ public:
         // vector<vector<int>> dp(n,vector<int>(n,-1));
         // return solve(0,0,n, triangle,dp);
         
+        // Tabulation Approach  
+        
         vector<vector<int>> dp(n,vector<int>(n,0));
         dp[0][0]= triangle[0][0];
         
@@ -36,11 +38,15 @@ public:
                 // if(j>i)
                 //     continue;
                 
+                // if it's first col then theres only one way to come i.e from upward cell
                 if(j==0)
                     dp[i][j]= triangle[i][j]+ dp[i-1][j];
                 
+                // if it's last col then there's only one way to come i.e. from diagnoal upward cell
+                
                 else if(j==i)
                     dp[i][j]=triangle[i][j]+ dp[i-1][j-1];
+                
                 else 
                 {
                     dp[i][j]= triangle[i][j] + min(dp[i-1][j] , dp[i-1][j-1]);
@@ -49,6 +55,7 @@ public:
             }
         }
         
+        // now the ans is min of all the ways to reach at the bottom of triangle 
         int ans= INT_MAX;
         
         for(int i=0;i<n;i++)
