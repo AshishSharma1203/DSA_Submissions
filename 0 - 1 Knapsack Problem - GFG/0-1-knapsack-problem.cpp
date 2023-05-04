@@ -9,6 +9,7 @@ class Solution
     public:
     //Function to return max value that can be put in knapsack of capacity W.
     
+    // memoization approach  
     int solve(int i, int w, int val[], int wt[],vector<vector<int>> &dp)
     {
         if(i==0)
@@ -23,9 +24,11 @@ class Solution
         
        if(wt[i]<=w)
        {
+             // i have two choice , either to pick it or not 
            return dp[i][w]=  max( solve(i-1, w, val, wt,dp) ,  (val[i] + solve(i-1, w-wt[i] , val, wt,dp)));
        }
-       
+       else 
+    //   not able to pick it 
        return  dp[i][w]=  solve(i-1, w, val, wt,dp);
         
     }
@@ -37,8 +40,10 @@ class Solution
     
     //   return solve(n-1, W, val, wt, dp);
     
+    // tabulation approach  
     vector<vector<int>> dp( n, vector<int> (W+1, 0));
     
+    // for W greater than wt[0] i can pick it 
     for(int i=wt[0];i<=W;i++)
     {
         dp[0][i] = val[0];
@@ -48,12 +53,15 @@ class Solution
     {
         for(int j=1;j<=W;j++)
         {
+            
             if(wt[i] <= j)
             {
+                // i have two choice , either to pick it or not  
                 dp[i][j] = max(dp[i-1][j],  val[i] + dp[i-1][j-wt[i]]);
             }
          
            else 
+        //   not able to pick the item  
            dp[i][j]= dp[i-1][j];
             
         }
