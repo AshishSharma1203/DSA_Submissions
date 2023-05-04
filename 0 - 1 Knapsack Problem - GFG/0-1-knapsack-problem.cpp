@@ -33,8 +33,33 @@ class Solution
     int knapSack(int W, int wt[], int val[], int n) 
     { 
        // Your code here
-       vector<vector<int>> dp(n,vector<int> (W+1,-1));
-       return solve(n-1, W, val, wt, dp);
+    //   vector<vector<int>> dp(n,vector<int> (W+1,-1));
+    
+    //   return solve(n-1, W, val, wt, dp);
+    
+    vector<vector<int>> dp( n, vector<int> (W+1, 0));
+    
+    for(int i=wt[0];i<=W;i++)
+    {
+        dp[0][i] = val[0];
+    }
+    
+    for(int i=1;i<n;i++)
+    {
+        for(int j=1;j<=W;j++)
+        {
+            if(wt[i] <= j)
+            {
+                dp[i][j] = max(dp[i-1][j],  val[i] + dp[i-1][j-wt[i]]);
+            }
+         
+           else 
+           dp[i][j]= dp[i-1][j];
+            
+        }
+    }
+    
+    return dp[n-1][W];
     }
 };
 
