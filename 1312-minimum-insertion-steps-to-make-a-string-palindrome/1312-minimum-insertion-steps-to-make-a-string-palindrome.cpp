@@ -1,12 +1,14 @@
-class Solution {
-public:
-    int minInsertions(string s) {
-        
-        int n = s.size();
+class Solution
+{
+    public:
+        int minInsertions(string s)
+        {
+
+            int n = s.size();
             string s1 = s;
             string s2 = s;
 
-           	// for palindromic subsequence its same from start and end hence reverse one string and then apply               LCS  to find the required ans
+           	// for min no of insertions, it is equal to length of string - Longest common palindromic subsequence  . 
 
             reverse(s2.begin(), s2.end());
 
@@ -32,7 +34,8 @@ public:
                 }
             }
 
-            return n- dp[n][n];
-        
-    }
+           	// so longest palindromic subsequence is given by dp[n][n], hence required ans = length of string - longes common palindromics subseuquence 
+
+            return n - dp[n][n];
+        }
 };
