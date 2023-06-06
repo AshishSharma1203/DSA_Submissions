@@ -8,12 +8,14 @@ class Solution
 
             vector<vector < int>> dp(n + 1, vector<int> (m + 1, 0));
 
+           	// find the lcs using tabulation method 
+
             for (int i = 1; i <= n; i++)
             {
                 for (int j = 1; j <= m; j++)
                 {
 
-                    if (str1[i-1] == str2[j-1])
+                    if (str1[i - 1] == str2[j - 1])
                     {
                         dp[i][j] = 1 + dp[i - 1][j - 1];
                        	// s.insert(str1[i]);
@@ -25,12 +27,15 @@ class Solution
 
             string ans = "";
             int i = n, j = m;
+
+           	// traverse from bottom and check if str1[i]==str2[j] then add it to ans, else check left of top cell 
+           	// whichever is larger move there and add the respective character 
             while (i > 0 && j > 0)
             {
 
-                if (str1[i-1] == str2[j-1])
+                if (str1[i - 1] == str2[j - 1])
                 {
-                    ans += str1[i-1];
+                    ans += str1[i - 1];
                     i--;
                     j--;
                 }
@@ -40,29 +45,28 @@ class Solution
 
                     if (dp[i - 1][j] > dp[i][j - 1])
                     {
-                        ans += str1[i-1];
+                        ans += str1[i - 1];
                         i--;
                     }
                     else
                     {
-                        ans += str2[j-1];
+                        ans += str2[j - 1];
                         j--;
                     }
                 }
             }
 
-           while(i>0)
-           {
-                ans+=str1[i-1];
-               i--;
-           }
-              
-            while(j>0)
+            while (i > 0)
             {
-                 ans+=str2[j-1];
+                ans += str1[i - 1];
+                i--;
+            }
+
+            while (j > 0)
+            {
+                ans += str2[j - 1];
                 j--;
             }
-               
 
             reverse(ans.begin(), ans.end());
             return ans;
