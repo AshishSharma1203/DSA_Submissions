@@ -40,11 +40,11 @@ class Solution
        	// return mem_solve(n - 1, m - 1, s, t, dp);
 
        	// Tabulation appraoch
-
+       	// here make dp array of n+1 size as we have to check for i-1 and j-1 also hence to avoid negative cases 
         vector<vector < int>> dp(n + 1, vector<int> (m + 1, 0));
 
        	// convert base cases 
-       	// if(j < 0) return 1
+       	// if(j < 0) return 1 ()
         for (int i = 0; i <= n; i++)
             dp[i][0] = 1;
 
@@ -54,10 +54,10 @@ class Solution
             {
 
                 if (s[i - 1] == t[j - 1])
-                    dp[i][j] = (dp[i - 1][j - 1] + dp[i - 1][j])% mod;
+                    dp[i][j] = (dp[i - 1][j - 1] + dp[i - 1][j]) % mod;
 
                 else
-                    dp[i][j] = dp[i - 1][j]% mod;;
+                    dp[i][j] = dp[i - 1][j] % mod;;
             }
         }
 
