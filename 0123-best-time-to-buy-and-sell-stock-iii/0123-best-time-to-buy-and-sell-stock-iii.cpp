@@ -72,7 +72,7 @@ class Solution
        	// recursive 
        	// vector<vector < int>> dp(n, vector<int> (2, -1));
 
-        vector<vector<vector< int>>> dp(n, vector<vector < int>> (2, vector<int> (3, -1)));	// (index,buy,count)
+        vector<vector<vector< int>>> dp(n+1, vector<vector < int>> (2, vector<int> (3, -1)));	// (index,buy,count)
        	// memoization 
         return mem_solve(0, buy, count, prices, dp);
 
