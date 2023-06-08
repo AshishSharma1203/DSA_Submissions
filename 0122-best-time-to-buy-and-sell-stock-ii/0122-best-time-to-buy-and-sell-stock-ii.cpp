@@ -4,60 +4,60 @@ class Solution
 
        	// Recursive approach 
 
-//         int solve(int i, bool bought, vector<int> &prices)
+        int solve(int i, bool bought, vector<int> &prices)
 
-//     {
+    {
 
-//         if (i == prices.size()) return 0;
+        if (i == prices.size()) return 0;
 
-//         int profit = 0;
+        int profit = 0;
 
-//         if (bought == false)
-//         {
+        if (bought == false)
+        {
 
-//             int buy = -prices[i] + solve(i + 1, true, prices);
-//             int not_buy = solve(i + 1, false, prices);
+            int buy = -prices[i] + solve(i + 1, true, prices);
+            int not_buy = solve(i + 1, false, prices);
 
-//             profit = max(buy, not_buy);
-//         }
-//         else if (bought == true)
-//         {
-//             int retain = 0 + solve(i + 1, true, prices);
-//             int sell = prices[i] + solve(i + 1, false, prices);
-//             profit = max(retain, sell);
-//         }
+            profit = max(buy, not_buy);
+        }
+        else if (bought == true)
+        {
+            int retain = 0 + solve(i + 1, true, prices);
+            int sell = prices[i] + solve(i + 1, false, prices);
+            profit = max(retain, sell);
+        }
 
-//         return profit;
-//     }
+        return profit;
+    }
 
    	// memoized approach 
 
-//     int mem_solve(int i, bool bought, vector<int> &prices, vector<vector< int>> &dp)
-//     {
+    int mem_solve(int i, bool bought, vector<int> &prices, vector<vector< int>> &dp)
+    {
 
-//         if (i == prices.size()) return 0;
+        if (i == prices.size()) return 0;
 
-//         if (dp[i][bought] != -1) return dp[i][bought];
+        if (dp[i][bought] != -1) return dp[i][bought];
 
-//         int profit = 0;
+        int profit = 0;
 
-//         if (bought == false)
-//         {
+        if (bought == false)
+        {
 
-//             int buy = -prices[i] + solve(i + 1, true, prices);
-//             int not_buy = solve(i + 1, false, prices);
+            int buy = -prices[i] + solve(i + 1, true, prices);
+            int not_buy = solve(i + 1, false, prices);
 
-//             profit = max(buy, not_buy);
-//         }
-//         else if (bought == true)
-//         {
-//             int retain = 0 + solve(i + 1, true, prices);
-//             int sell = prices[i] + solve(i + 1, false, prices);
-//             profit = max(retain, sell);
-//         }
+            profit = max(buy, not_buy);
+        }
+        else if (bought == true)
+        {
+            int retain = 0 + solve(i + 1, true, prices);
+            int sell = prices[i] + solve(i + 1, false, prices);
+            profit = max(retain, sell);
+        }
 
-//         return dp[i][bought] = profit;
-//     }
+        return dp[i][bought] = profit;
+    }
 
     int maxProfit(vector<int> &prices)
     {
@@ -102,7 +102,7 @@ class Solution
             }
         }
 
-        // our ans will be 
+       	// our ans will be  
         return dp[0][0];
     }
 };
