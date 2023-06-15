@@ -44,18 +44,19 @@ class Solution
 
        	// recursive approach 
         int n = nums.size();
-        // int ans = INT_MIN;
-        // solve(0, n, 0, nums, ans);
-        // return ans;
-       int ans=INT_MIN;
-        int curr_ans=0;
-        
-        for(int i=0;i<n;i++)
+       	// int ans = INT_MIN;
+       	// solve(0, n, 0, nums, ans);
+       	// return ans;
+
+       	// Kadane's Algo 
+        int ans = INT_MIN;
+        int curr_ans = 0;
+
+        for (int i = 0; i < n; i++)
         {
 
-            curr_ans= max(nums[i]+curr_ans, nums[i]);
-            ans=max(ans,curr_ans);
-        
+            curr_ans = max(nums[i] + curr_ans, nums[i]);
+            ans = max(ans, curr_ans);
         }
         return ans;
     }
