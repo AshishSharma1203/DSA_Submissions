@@ -19,7 +19,7 @@ class Solution
 
                     if (st.find(s[j]) != st.end())
                     {
-                         
+                        j=i-1;
                         break;
                     }
                     else
