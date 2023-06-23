@@ -12,8 +12,6 @@ class Solution
 {
     public:
 
-       	// Approach 1: counting nodes and deleting count-n th node from start 
-
         ListNode* removeNthbyCount(ListNode *head, int n)
         {
 
@@ -50,6 +48,33 @@ class Solution
 
     ListNode* removeNthFromEnd(ListNode *head, int n)
     {
-        return removeNthbyCount(head, n);
+       	// Approach 1: counting nodes and deleting count-n th node from start 
+       	// return removeNthbyCount(head, n);
+       	// approach2: using single traversal
+
+        if (head == NULL || head->next == NULL) return NULL;
+
+        ListNode *slow = head, *fast = head;
+
+        for (int i = 1; i <= n; i++)
+        {
+            fast = fast->next;
+        }
+       	// check if fast is null it means  we need to delete head node 
+        if (fast == nullptr)
+        {
+            ListNode *newHead = head->next;
+            delete head;
+            return newHead;
+        }
+        while (fast->next != NULL)
+        {
+            slow = slow->next;
+            fast = fast->next;
+        }
+
+       	// else delete the required node 
+        slow->next = slow->next->next;
+        return head;
     }
 };
