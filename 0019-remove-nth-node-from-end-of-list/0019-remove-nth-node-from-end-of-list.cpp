@@ -11,8 +11,12 @@
 class Solution
 {
     public:
-        ListNode* removeNthFromEnd(ListNode *head, int n)
+
+       	// Approach 1: counting nodes and deleting count-n th node from start 
+
+        ListNode* removeNthbyCount(ListNode *head, int n)
         {
+
             if (head == NULL || head->next == NULL) return NULL;
             int count = 0;
            	// count the number of nodes
@@ -43,4 +47,9 @@ class Solution
             delete next;
             return head;
         }
+
+    ListNode* removeNthFromEnd(ListNode *head, int n)
+    {
+        return removeNthbyCount(head, n);
+    }
 };
