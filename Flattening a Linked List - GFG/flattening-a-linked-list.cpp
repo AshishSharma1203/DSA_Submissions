@@ -110,54 +110,98 @@ struct Node{
 
 /*  Function which returns the  root of 
     the flattened linked list. */
+    
+    
+// approach 1:using bubble sort 
+//   if(root==NULL || root->next==NULL) return root;
+
+//   Node* curr1=root->next;
+  
+//   Node*curr2=root;
+//   root->next=NULL;
+//   while(curr2->bottom!=NULL) curr2=curr2->bottom;
+   
+//   while(curr1!=NULL)
+//   {
+       
+//         Node* curr1_next = curr1->next;
+//     curr1->next = NULL;
+//     curr2->bottom = curr1;  // Updated: Change curr2->next to curr2->bottom
+//     curr2 = curr2->bottom;  // Updated: Traverse the bottom pointer instead of next
+//     while (curr2->bottom != NULL)
+//         curr2 = curr2->bottom;
+//     curr1 = curr1_next;
+//   }
+   
+  
+//   curr1=root;
+//   int count=0;
+//   while(curr1!=NULL)
+//   {
+//       count++;
+//       curr1=curr1->bottom;
+//   }
+  
+  
+//   for (int i = 0; i < count - 1; i++) {
+//         Node* curr = root;
+//         for (int j = 0; j < count - i - 1; j++) {
+//             if (curr->data > curr->bottom->data) {
+//                 int temp = curr->data;
+//                 curr->data = curr->bottom->data;
+//                 curr->bottom->data = temp;
+//             }
+//             curr = curr->bottom;
+//         }
+//     }
+  
+//   return root;
+  
+ Node* merge(Node*curr1, Node*curr2)
+ {
+     
+    Node* tail=new Node(0);
+    Node* ans=tail;
+    
+    while(curr1!=NULL && curr2!=NULL)
+    {
+        if(curr1->data<curr2->data)
+        {
+            tail->bottom=curr1;
+            curr1=curr1->bottom;
+            tail=tail->bottom;
+        }
+        else
+        {
+            tail->bottom=curr2;
+            curr2=curr2->bottom;
+            tail=tail->bottom;
+        }
+    }
+    if(curr1!=NULL)
+    tail->bottom= curr1;
+    
+    else
+     tail->bottom=curr2;
+     
+     return ans->bottom;
+     
+ }
+   
+    
 Node *flatten(Node *root)
 {
    // Your code here
    
-   if(root==NULL || root->next==NULL) return root;
+ if(root==NULL || root->next==NULL) return root;
+  
+  root->next=flatten(root->next);
+  
+  Node* ans=merge(root,root->next);
+  
+  
+  return ans;
+ 
 
-  Node* curr1=root->next;
-  
-  Node*curr2=root;
-  root->next=NULL;
-  while(curr2->bottom!=NULL) curr2=curr2->bottom;
-   
-   while(curr1!=NULL)
-   {
-       
-        Node* curr1_next = curr1->next;
-    curr1->next = NULL;
-    curr2->bottom = curr1;  // Updated: Change curr2->next to curr2->bottom
-    curr2 = curr2->bottom;  // Updated: Traverse the bottom pointer instead of next
-    while (curr2->bottom != NULL)
-        curr2 = curr2->bottom;
-    curr1 = curr1_next;
-   }
-   
-  
-  curr1=root;
-  int count=0;
-  while(curr1!=NULL)
-  {
-      count++;
-      curr1=curr1->bottom;
-  }
-  
-  
-  for (int i = 0; i < count - 1; i++) {
-        Node* curr = root;
-        for (int j = 0; j < count - i - 1; j++) {
-            if (curr->data > curr->bottom->data) {
-                int temp = curr->data;
-                curr->data = curr->bottom->data;
-                curr->bottom->data = temp;
-            }
-            curr = curr->bottom;
-        }
-    }
-  
-  return root;
-  
-   
 }
 
