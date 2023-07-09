@@ -12,16 +12,18 @@ class Solution
                	// remove trailing spaces 
                 while (j < n && s[j] == ' ')
                 {
-                   	// i++;
+
                     j++;
                 }
+               	// if there is trailing spaces only then 
                 if (j == n) break;
+               	// start another sustirng from i =j 
                 i = j;
                 while (j < n && s[j] != ' ')
                 {
                     j++;
                 }
-               	// reverse(s.begin() + i, s.begin() + j);
+
                 string temp = s.substr(i, j - i);
                 reverse(temp.begin(), temp.end());
 
@@ -31,9 +33,9 @@ class Solution
                 i = j;
             }
 
-           	// reverse(s.begin(),s.end());
+           	// remove the last added extra " " 
             ans.pop_back();
-           	// reverse(ans.begin(), ans.end());
+
             return ans;
         }
 };
