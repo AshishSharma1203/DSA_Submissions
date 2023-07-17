@@ -12,29 +12,18 @@
 class Solution {
 public:
     
-    void solve (TreeNode* curr, int k,unordered_set<int> &s,bool &ans)
-    {
-        if(curr==NULL) return ;
-        if(s.find(k-curr->val)!=s.end())
-        {
-            ans=true;
-            return ;
-        }
-        else {
-            s.insert(curr->val);
-        }
-        solve(curr->left,k,s,ans);
-        solve (curr->right,k,s,ans);
-        
-    }
+    unordered_set<int> s;
     
     bool findTarget(TreeNode* root, int k) {
         
-        unordered_set<int> s;
-        bool ans=false;
-        solve(root,k,s,ans);
+        if(root==NULL)
+            return false;
+        if(s.find(k-root->val)!=s.end())
+            return true;
         
-        return ans; 
+        s.insert(root->val);
+        
+        return findTarget(root->left,k) || findTarget(root->right,k);
         
     }
 };
