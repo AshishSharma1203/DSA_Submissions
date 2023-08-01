@@ -16,6 +16,7 @@ class Solution
             {
                 temp.push_back(j);
                 solve(j, n, k, count + 1, temp, ans);
+               	// backtrack : pop out the last inserted element to find new combination  
                 temp.pop_back();
             }
         }
@@ -25,10 +26,11 @@ class Solution
 
         vector<int> temp;
         vector<vector < int>> ans;
-
+       	// if (size of combination is greater than value of n then its not possible too generate the combination)
         if (k > n)
             return ans;
 
+       	// loop from 1 to n and generate all possible combination 
         for (int i = 1; i <= n; i++)
         {
             temp.push_back(i);
