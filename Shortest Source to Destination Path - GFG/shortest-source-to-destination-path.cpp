@@ -14,44 +14,44 @@ class Solution {
         
         if(A[0][0]==0)
         return -1;
-        vector<vector<int>> dis(N,vector<int>(M,INT_MAX));
         
-        dis[0][0]=0;
+        // vector<vector<int>> dis(N,vector<int>(M,INT_MAX));
+        vector<vector<bool>> vis(N,vector<bool>(M,false));
+        vis[0][0]=true;
         
+        // dis[0][0]=0;
         int dx[]={-1,0,1,0};
-        int dy[]={0,-1,0,1};
+        int dy[]={0,1,0,-1};
         
+        queue<pair<int,pair<int,int>>>q;
+        q.push({0,{0,0}});
         
-        // row,col
-        queue<pair<int,int>>q;
-        q.push({0,0});
-        
-        
-        // use dijkstra algo 
-        
-        while(q.empty()==false)
+        while(!q.empty())
         {
-            int row=q.front().first, col=q.front().second;
+            
+            int curr_dis=q.front().first, row=q.front().second.first,col=q.front().second.second;
             q.pop();
             
-            int curr_dis=dis[row][col];
-            // if(row==X && col==Y)
-            // return curr_dis;
+            
+            if(row==X and col==Y)
+            return curr_dis;
+        
             
             for(int i=0;i<4;i++)
             {
                 
-                int x=row+dx[i],y=col+dy[i];
-                
-                if(x>=0 &&x<N && y>=0 && y<M && A[x][y]==1 && 1+ curr_dis < dis[x][y])
+                int x=row+dx[i], y=col+dy[i];
+                if(x>=0 && x<N &&  y>=0 && y<M && A[x][y]==1 && vis[x][y]==false )
                 {
-                    dis[x][y]=1+ curr_dis;
-                    q.push({x,y});
+                    q.push({1+curr_dis,{x,y}});
+                    vis[x][y]=true;
                 }
+                
             }
+            
         }
         
-        return dis[X][Y]==INT_MAX?-1:dis[X][Y];
+        return -1;
         
     }
 };
