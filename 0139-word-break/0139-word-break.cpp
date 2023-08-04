@@ -1,41 +1,30 @@
 class Solution
 {
     public:
-        bool MCM(int i, int j, string &s, unordered_set<string> &dict, vector<vector< int>> &dp)
+
+        bool solve(int i, string s, unordered_set<string> &dict, vector<int> &dp)
         {
-            if (i > j)
-            {
-                return false;
-            }
 
-            string temp = s.substr(i, j - i + 1);
-            if(dp[i][j] != -1)
-            return dp[i][j];
-            if (dict.find(temp) != dict.end())
-            {
+            if (i == s.size())
                 return true;
-            }
-            bool ans = false;
-            for (int k = i; k <= j - 1; k++)
+            if (dp[i] != -1)
+                return dp[i];
+            string temp = "";
+
+            for (int j = i; j < s.size(); j++)
             {
+                temp += s[j];
 
-                bool left = MCM(i, k, s, dict,dp);
-                bool right = MCM(k + 1, j, s, dict,dp);
-
-                if (left && right)
-                {
-                    ans = true;
-                }
+                if (dict.find(temp) != dict.end() && solve(j + 1, s, dict,dp))
+                    return dp[i] = true;
             }
-            return dp[i][j] = ans;
+            return dp[i] = false;
         }
 
     bool wordBreak(string s, vector<string> &wordDict)
     {
-        int n = s.size();
         unordered_set<string> dict(wordDict.begin(), wordDict.end());
-        int i = 0, j = n - 1;
-        vector<vector < int>> dp(n, vector<int> (n, -1));
-        return MCM(i, j, s, dict,dp);
+        vector<int> dp(s.size(), -1);
+        return solve(0, s, dict, dp);
     }
 };
