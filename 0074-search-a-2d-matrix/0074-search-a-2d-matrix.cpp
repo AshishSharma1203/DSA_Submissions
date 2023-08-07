@@ -7,23 +7,25 @@ class Solution
            	// approach 1  use normal search by traversing 
 
            	// optimal approach 
-            
-            int m= matrix.size(), n= matrix[0].size();
-            
-            int i=0, j= n-1;
-            bool ans=false;
-            while(i<m && j>=0)
+
+            int m = matrix.size(), n = matrix[0].size();
+
+            int i = 0, j = n - 1;
+            bool ans = false;
+            while (i < m && j >= 0)
             {
-                if(matrix[i][j]==target)
+               	// if current cell= target return 
+                if (matrix[i][j] == target)
                     return true;
-                if(target<matrix[i][j])
+               	// if current cell value is greater than target move left 
+                if (target < matrix[i][j])
                 {
                     j--;
                 }
-                else 
+                else
+                   	// if current cell value is less than target then move down
                     i++;
             }
             return false;
-
         }
 };
