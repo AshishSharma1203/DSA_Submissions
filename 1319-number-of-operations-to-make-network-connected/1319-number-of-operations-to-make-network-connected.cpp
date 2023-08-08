@@ -1,88 +1,76 @@
 class DisjointSet
 {
+public:
+    vector<int> parent;
+    vector<int> size;
 
-    public:
-    vector<int> parent, size;
-        DisjointSet(int n)
-        {
-            parent.resize(n + 1);
-            size.resize(n + 1);
-
-            for (int i = 0; i < n; i++)
-            {
-                parent[i] = i;
-                size[i] = 1;
-            }
-        }
-
-    int findUparent(int u)
+    DisjointSet(int n)
     {
-        if (parent[u] == u) return u;
-
-        int par = parent[u];
-        int uparent = findUparent(par);
-        return parent[u] = uparent;
+        parent.resize(n);
+        size.resize(n, 1);
+        for (int i = 0; i < n; i++)
+        {
+            parent[i] = i;
+        }
     }
 
-    void UnionBySize(int u, int v)
+    int findUPar(int u)
     {
-        int par_u = findUparent(u), par_v = findUparent(v);
-        if (par_u == par_v) return;
+        if (u == parent[u])
+            return u;
 
-        if (size[par_u] > size[par_v])
+        return parent[u] = findUPar(parent[u]);
+    }
+
+    void unionBySize(int u, int v)
+    {
+        int ulp_u = findUPar(u), ulp_v = findUPar(v);
+        if (ulp_u == ulp_v)
+            return;
+
+        if (size[ulp_u] < size[ulp_v])
         {
-            parent[par_v] = par_u;
-            size[par_u] += size[par_v];
+            parent[ulp_u] = ulp_v;
+            size[ulp_v] += size[ulp_u];
         }
         else
         {
-            parent[par_u] = par_v;
-            size[par_v] += size[par_u];
+            parent[ulp_v] = ulp_u;
+            size[ulp_u] += size[ulp_v];
         }
     }
 };
 
 class Solution
 {
+public:
+    int makeConnected(int n, vector<vector<int>>& connections)
+    {
+        DisjointSet s(n);
 
-    public:
-        int makeConnected(int n, vector<vector < int>> &connections)
+        int extraCables = 0, required = 0;
+
+        for (int i = 0; i < connections.size(); i++)
         {
-            cout<<n<<" "<<connections.size()<<endl;
-
-            // if (connections.size() < n - 1) return -1;
-
-           	// use min spanning tree using kruskal's algo
-
-            DisjointSet ds(n+1);
-            int extraedges=0;
-
-            for (int i = 0; i < connections.size(); i++)
+            int u = connections[i][0], v = connections[i][1];
+            if (s.findUPar(u) == s.findUPar(v))
             {
-                int u = connections[i][0], v = connections[i][1];
-                int par_u = ds.findUparent(u), par_v = ds.findUparent(v);
-
-                if (par_u == par_v)
-                {
-                   
-                    extraedges++;
-                }
-                else
-                {
-                    ds.UnionBySize(u, v);
-                    
-                }
+                extraCables++;
             }
-
-            int count = 0;
-
-            for (int i = 0; i < n; i++)
+            else
             {
-                if (ds.parent[i]==i)
-                    count++;
+                s.unionBySize(u, v);
             }
-               int ans=count-1;
-            if(extraedges>=count-1) return count-1;
-            return -1;
         }
+
+        for (int i = 0; i < n; i++) // Loop from 0 to n-1
+        {
+            if (s.parent[i] == i)
+            {
+                required++;
+            }
+        }
+
+        return (required-1 > extraCables) ? -1 : required-1;
+    }
 };
