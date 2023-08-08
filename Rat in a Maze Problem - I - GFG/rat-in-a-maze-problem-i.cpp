@@ -11,43 +11,51 @@ using namespace std;
 class Solution{
     public:
     
-   void solve(int i, int j, vector < vector < int >> & a, int n, vector < string > & ans, string move,
-    vector < vector < int >> & vis, int di[], int dj[]) {
-    if (i == n - 1 && j == n - 1) {
-      ans.push_back(move);
-      return;
+    void solve(int x,int y,vector<vector<int>>&m,int n,vector<vector<bool>>&visited,vector<string> &ans,string &path)
+    {
+        
+        if(x==n-1 && y==n-1)
+        {
+            ans.push_back(path);
+            return;
+        }
+        
+        int dx[4]={-1,0,1,0};
+        int dy[4]={0,-1,0,1};
+        string dir="ULDR";
+        
+        for(int i=0;i<4;i++)
+        {
+            // left move
+            int row=x+dx[i],col=y+dy[i];
+            
+            if(row>=0&& row<n && col>=0&& col<n && m[row][col]==1 && visited[row][col]==false)
+            {
+                visited[row][col]=true;
+                path.push_back(dir[i]);
+                solve(row,col,m,n,visited,ans,path);
+                visited[row][col]=false;
+                path.pop_back();
+            }
+            
+        }
+        
+       
+      
+        
     }
-    string dir = "DLRU";
-    for (int ind = 0; ind < 4; ind++) {
-      int nexti = i + di[ind];
-      int nextj = j + dj[ind];
-      if (nexti >= 0 && nextj >= 0 && nexti < n && nextj < n && !vis[nexti][nextj] && a[nexti][nextj] == 1) {
-        vis[i][j] = 1;
-        solve(nexti, nextj, a, n, ans, move + dir[ind], vis, di, dj);
-        vis[i][j] = 0;
-      }
-    }
-
-  }
+    
     vector<string> findPath(vector<vector<int>> &m, int n) {
         // Your code goes here
+        vector<string>ans;
+        if(m[0][0]==0)
+        return ans;
+        vector<vector<bool>>visited(n,vector<bool>(n,false));
+        string path="";
+        visited[0][0]=true;
+        solve(0,0,m,n,visited,ans,path);
         
-        vector < string > ans;
-      vector < vector < int >> vis(n, vector < int > (n, 0));
-      int di[] = {
-        +1,
-        0,
-        0,
-        -1
-      };
-      int dj[] = {
-        0,
-        -1,
-        1,
-        0
-      };
-      if (m[0][0] == 1) solve(0, 0, m, n, ans, "", vis, di, dj);
-      return ans;
+        return ans;
         
     }
 };
