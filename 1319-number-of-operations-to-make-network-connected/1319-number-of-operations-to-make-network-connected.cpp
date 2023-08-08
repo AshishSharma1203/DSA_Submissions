@@ -70,7 +70,7 @@ public:
                 required++;
             }
         }
-
+// as in one network all node will be connected
         return (required-1 > extraCables) ? -1 : required-1;
     }
 };
