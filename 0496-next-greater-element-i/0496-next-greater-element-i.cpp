@@ -43,29 +43,36 @@ class Solution
            	// to store element and its greater element of nums2  array  
 
             stack<int> st;
-            mp.insert({ nums2[m - 1],
-                -1 });
-
+           	// vector<int> arr(m);
             st.push(nums2[m - 1]);
-            for (int i = m - 2; i >= 0; i--)
+           	// arr[m-1]=
+            mp[nums2[m - 1]] = -1;
+
+            for (int j = m - 2; j >= 0; j--)
             {
-
-                int curr = nums2[i];
-
-                while (!st.empty() && st.top() < curr)
+                while (!st.empty() && st.top() < nums2[j])
                 {
+
                     st.pop();
                 }
-                int next_greater = st.empty() ? -1 : st.top();
-                mp.insert({ nums2[i],
-                    next_greater });
-                st.push(nums2[i]);
-            }
 
-            vector<int> ans;
-            for (int i = 0; i < n; i++)
+                if (st.empty())
+                {
+                    mp[nums2[j]] = -1;
+                    st.push(nums2[j]);
+                }
+                else
+                {
+
+                    mp[nums2[j]] = st.top();
+                    st.push(nums2[j]);
+                }
+            }
+            vector<int> ans(n);
+            for (int i = 0; i < nums1.size(); i++)
             {
-                ans.push_back(mp[nums1[i]]);
+
+                ans[i] = mp[nums1[i]];
             }
             return ans;
         }
