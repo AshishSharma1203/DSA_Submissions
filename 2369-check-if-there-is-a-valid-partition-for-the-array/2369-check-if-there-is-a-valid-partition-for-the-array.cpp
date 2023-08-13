@@ -39,12 +39,14 @@ class Solution
             bool way1 = false, way2 = false, way3 = false;
 
             if (i <= n - 2 && nums[i] == nums[i + 1])
-                way1 = solve(i + 2, nums, dp);
+               	// way1 = solve(i + 2, nums, dp);
+                way1 = dp[i + 2];
             if (i <= n - 3 && nums[i] == nums[i + 1] && nums[i + 1] == nums[i + 2])
-                way2 = solve(i + 3, nums, dp);
+               	// way2 = solve(i + 3, nums, dp);
+                way2 = dp[i + 3];
             if (i <= n - 3 && nums[i] + 1 == nums[i + 1] && nums[i + 1] + 1 == nums[i + 2])
-                way3 = solve(i + 3, nums, dp);
-
+               	// way3 = solve(i + 3, nums, dp);
+                way3 = dp[i + 3];
             ans = way1 || way2 || way3;
             dp[i] = ans;
         }
