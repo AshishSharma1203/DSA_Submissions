@@ -13,7 +13,7 @@ class Solution
     public:
         ListNode* partition(ListNode *head, int x)
         {
-
+              // ls-. lessStart, le--less end , gs---greaterStart, g-->greater end 
             ListNode *ls = NULL, *le = NULL, *gs = NULL, *ge = NULL;
 
             for (ListNode *curr = head; curr != NULL; curr = curr->next)
