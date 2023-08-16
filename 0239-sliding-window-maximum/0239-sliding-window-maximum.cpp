@@ -3,7 +3,8 @@ class Solution
     public:
         vector<int> maxSlidingWindow(vector<int> &nums, int k)
         {
-
+           	// approach 1: use two nested loops 
+            // approach 2 : using priority queue 
             vector<int> ans;
             priority_queue<pair<int, int>> pq;
             int n = nums.size();
@@ -15,7 +16,7 @@ class Solution
             }
             ans.push_back(pq.top().first);
 
-            for (int i = k; i <n; i++)
+            for (int i = k; i < n; i++)
             {
                 while (!pq.empty() && pq.top().second < i - k + 1)
                 {
