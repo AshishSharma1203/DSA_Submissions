@@ -2,86 +2,51 @@ class Solution
 {
     public:
 
-        bool isvalid(int x, int y, int n, int mid)
-        {
-            return (x >= 0 && x < n && y >= 0 && y < mid);
-           	// to check whether on which path we are moving is valid or not 
-        }
+      bool bfs(vector<vector<int>> &heights, int effort) {
+    int m = heights.size(), n = heights[0].size();
+    vector<int> dx = {-1, 0, 1, 0};
+    vector<int> dy = {0, -1, 0, 1};
+    vector<vector<int>> visited(m, vector<int>(n, false));
 
-    bool bfs(vector<vector < int>> &heights, int k)
-    {
+    queue<pair<int, int>> q;
+    q.push({0, 0});
+    visited[0][0] = true;
 
-        int dx[4] = { 0,
-            0,
-            -1,
-            1
-        };
-        int dy[4] = { 1,
-            -1,
-            0,
-            0
-        };
-        queue<pair<int, int>> q;
-       	// queue to perform the BFS logic 
-        q.push({ 0,
-            0 });
-       	// initially push the first cell of matrix 
-        vector<vector < bool>> visited(101, vector<bool> (101, false));
-       	// make a visisted array initially with all the value false initially 
-        visited[0][0] = 1;
-       	// since it visited, makr it a true  
+    while (!q.empty()) {
+        auto curr = q.front();
+        q.pop();
+        int row = curr.first, col = curr.second;
+        if (row == m - 1 && col == n - 1)
+            return true;
 
-        while (!q.empty())
-        {
-            pair<int, int> curr = q.front();
-           	// pick out the front 
-            q.pop();
-            int cx = curr.first;
-            int cy = curr.second;
-           	// get the current x and y 
-            if (cx == heights.size() - 1 && cy == heights[0].size() - 1)
-                return true;
-           	// if we are reached the last index we are done
-           	// else just go in all 4 direction and check conditions  
-            for (int i = 0; i < 4; i++)
-            {
-                int x = dx[i] + cx;
-                int y = dy[i] + cy;
-               	// each time make new x, y 
-                if (isvalid(x, y, heights.size(), heights[0].size()) && !visited[x][y])
-                {
-                   	// if that x,y is valid, just check tah absolute difference is less tha tha mid or not 
-                    if (abs(heights[cx][cy] - heights[x][y]) <= k)
-                    {
-                        visited[x][y] = true;
-                       	// if yes visit that node 
-                        q.push({ x,
-                            y });
-                       	// push it in queue 
-                    }
+        for (int k = 0; k < 4; k++) {
+            int x = row + dx[k], y = col + dy[k];
+
+            if (x >= 0 && x < m && y >= 0 && y < n && visited[x][y] == false) {
+                if (abs(heights[x][y] - heights[row][col]) <= effort) {
+                    q.push({x, y});
+                    visited[x][y] = true;
                 }
             }
         }
-        return false;
+    }
+    return false;
+}
+
+int minimumEffortPath(vector<vector<int>> &heights) {
+    int low = 0, high = 1e6, ans = 0;
+
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+
+        if (bfs(heights, mid)) {
+            ans = mid;
+            high = mid - 1;  // Fix this line: change "mid = high - 1" to "high = mid - 1"
+        } else
+            low = mid + 1;
     }
 
-    int minimumEffortPath(vector<vector < int>> &heights)
-    {
+    return ans;
+}
 
-        int low = 0, high = 1e6, ans = 0;
-
-        while (low <= high)
-        {
-            int mid = low + (high - low) / 2;
-
-            if (bfs(heights, mid))
-            {
-                ans = mid;
-                high = mid - 1;
-            }
-            else
-                low = mid + 1;
-        }
-        return ans;
-    }
 };
