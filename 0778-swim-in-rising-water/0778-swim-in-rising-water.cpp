@@ -1,51 +1,65 @@
 class Solution {
 public:
-   int swimInWater(vector<vector<int>> &grid) {
-   int n = grid.size();
-        int m = grid[0].size();
-
-        vector<vector<int>>time(n, vector<int>(m, 1e9));
-        priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int,int>>>,
-        greater<pair<int,pair<int,int>>>> pq;
-        time[0][0] = grid[0][0];
-        int ans = 1e9;
-     
-        pq.push({time[0][0], {0,0}});
+    
+    bool bfs(vector< vector<int>>&grid, int k)
+    {
+        int n=grid.size();
+        vector<vector<bool>>visited(n,vector<bool>(n,false));
+        vector<int>dx={-1,0,1,0};
+        vector<int>dy={0,-1,0,1};
+        queue<pair<int,int>>q;
+        // if(grid[0][0]<=k)
+        q.push({0,0});
         
-        int dr[] = {-1, 0, 1, 0};
-        int dc[] = {0, 1, 0, -1};
-        while(!pq.empty())
+        while(q.empty()==false)
         {
-            auto it = pq.top();
-            pq.pop();
-            int diff = it.first;
-            int r = it.second.first;
-            int c = it.second.second;
-           
             
-            for(int i = 0; i<4; i++)
+            auto curr=q.front();
+            q.pop();
+            int x=curr.first, y=curr.second;
+            if(x==n-1 && y==n-1)
+                return true;
+            
+            for(int i=0;i<4;i++)
             {
-                int nrow = dr[i] + r;
-                int ncol = dc[i] + c;
-                
-                if(nrow>=0 && nrow<n && ncol >=0 && ncol <m && grid[nrow][ncol] < time[nrow][ncol])
+                int row=x+dx[i],col=y+dy[i];
+                if(row>=0 && row<n && col>=0 && col<n && visited[row][col]==false)
                 {
-                    if(diff <  grid[nrow][ncol])
+                    
+                    if(grid[row][col]<=k)
                     {
-                        time[nrow][ncol] = grid[nrow][ncol];
-                        pq.push({time[nrow][ncol], {nrow, ncol}});
-                         
+                        q.push({row,col});
+                        visited[row][col]=true;
                     }
-                    else if(diff < time[nrow][ncol])
-                    {
-                        time[nrow][ncol] = diff;
-                        pq.push({time[nrow][ncol], {nrow, ncol}});
-                    }  
+                    
                 }
             }
             
         }
-        return time[n-1][m-1];
-}
-
+        return false;
+        
+    }
+    
+    int swimInWater(vector<vector<int>>& grid) {
+       
+        int low=grid[0][0],high=2500,ans=low;
+        
+        while(low<=high)
+        {
+            int mid=low+(high-low)/2;
+            
+            if(bfs(grid,mid))
+            {
+                ans=mid;
+                high=mid-1;
+                
+            }
+            else 
+                low=mid+1;
+            
+        }
+        
+        return ans;
+        
+    }
 };
