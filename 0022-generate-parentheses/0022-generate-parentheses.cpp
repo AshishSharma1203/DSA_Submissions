@@ -26,7 +26,7 @@ class Solution
             return st.empty() == true ? true : false;
         }
 
-    void solve(int open, int close, string &temp, vector<string> &ans)
+    void solve(int open, int close, string temp, vector<string> &ans)
     {
         if (open == 0 && close == 0)
         {
