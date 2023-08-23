@@ -37,7 +37,7 @@ class Solution
 
         if (open > 0)
             solve(open - 1, close, temp + "(", ans);
-        if (close > open)
+        if (close > 0)
             solve(open, close - 1, temp + ")", ans);
     }
 
