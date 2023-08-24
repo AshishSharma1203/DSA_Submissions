@@ -1,32 +1,77 @@
-class Solution {
-public:
-    string reorganizeString(string S) {
-      // copiedd , to be done tommorow
-        vector<int> cnt(26);
-	int mostFreq = 0, i = 0;
+class Solution
+{
+    public:
 
-	for(char c : S)
-		if(++cnt[c - 'a'] > cnt[mostFreq])
-			mostFreq = (c - 'a');
+        string reorganizeString(string s)
+        {
+            vector<int> charCount(26, 0);
 
-	if(2 * cnt[mostFreq] - 1 > S.size()) return "";
+            for (int i = 0; i < s.size(); i++)
+            {
+                charCount[s[i] - 'a']++;
+            }
 
-	while(cnt[mostFreq]) {
-		S[i] = ('a' + mostFreq);
-		i += 2;
-		cnt[mostFreq]--;
-	}
+            priority_queue<pair<int, char>> pq;
 
-	for(int j = 0; j < 26; j++) {
-		while(cnt[j]) {
-			if(i >= S.size()) i = 1;
-			S[i] = ('a' + j);
-			cnt[j]--;
-			i += 2;
-		}
-	}
+            for (int i = 0; i < 26; i++)	
+            {
+                if (charCount[i] > 0)
+                {
+                    pq.push({ charCount[i],
+                        (char) i + 'a' });
+                }
+            }
 
-	return S;
-        
-    }
+            string ans = "";
+
+            while (pq.empty() == false)
+            {
+                auto curr = pq.top();
+                pq.pop();
+
+                if (ans == "")
+                {
+                    ans.push_back(curr.second);
+                    curr.first--;
+                    if (curr.first > 0)	
+                    {
+                        pq.push({ curr.first,
+                            curr.second });	
+                    }
+                }
+                else
+                {
+                    if (ans.back() != curr.second)
+                    {
+                        ans.push_back(curr.second);
+                        curr.first--;
+                        if (curr.first > 0)	
+                        {
+                            pq.push({ curr.first,
+                                curr.second });	
+                        }
+                    }
+                    else
+                    {
+                        if (pq.empty())	// Add this condition to handle corner cases 
+                        {
+                            return "";
+                        }
+
+                        auto curr_next = pq.top();
+                        pq.pop();
+                        pq.push(curr);
+                        ans.push_back(curr_next.second);
+                        curr_next.first--;
+                        if (curr_next.first > 0)	
+                        {
+                            pq.push({ curr_next.first,
+                                curr_next.second });	
+                        }
+                    }
+                }
+            }
+
+            return ans;
+        }
 };
