@@ -13,17 +13,17 @@ class Solution
         if (i >= pairs.size())
             return 0;
 
-        if (dp[i][last] != -1)
-            return dp[i][last];
+        if (dp[i][last+1] != -1)
+            return dp[i][last+1];
 
         int way1 = solve(i + 1, last, pairs, dp);
         int way2 = 0;
-        if (last == 0  || pairs[last-1][1] < pairs[i][0])
+        if (last == -1  || pairs[last][1] < pairs[i][0])
         {
 
-            way2 = 1 + solve(i + 1, i+1, pairs, dp);
+            way2 = 1 + solve(i + 1, i, pairs, dp);
         }
-        return dp[i][last] = max(way1, way2);
+        return dp[i][last+1] = max(way1, way2);
     }
 
     int findLongestChain(vector<vector < int>> &pairs)
@@ -32,6 +32,6 @@ class Solution
         sort(pairs.begin(), pairs.end(), comp);
         int n = pairs.size();
         vector<vector < int>> dp(n, vector<int> (n+1, -1));
-        return solve(0, 0, pairs, dp);
+        return solve(0, -1, pairs, dp);
     }
 };
