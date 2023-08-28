@@ -1,42 +1,58 @@
-class MyStack {
-public:
-    queue<int> q;
-    MyStack() {
-        
+class MyStack
+{
+    public:
+        queue<int> q;
+    MyStack()
+    {
+
+       	// queue<int> q;?
     }
-    
-    void push(int x) {
-        
-        q.push(x);
-        for(int i=0;i<q.size()-1;i++)
+
+    void push(int x)
+    {
+
+        queue<int> temp;
+        while (q.empty() == false)
         {
-            q.push(q.front());
+            temp.push(q.front());
             q.pop();
         }
-        
+        q.push(x);
+        while (temp.empty() == false)
+        {
+            q.push(temp.front());
+            temp.pop();
+        }
     }
-    
-    int pop() {
-        
-        int ans=q.front();
+
+    int pop()
+    {
+
+        if (q.empty())
+            return -1;
+
+        int a = q.front();
         q.pop();
-        return ans; 
+        return a;
     }
-    
-    int top() {
+
+    int top()
+    {
+
         return q.front();
     }
-    
-    bool empty() {
-        return q.size()==0;
+
+    bool empty()
+    {
+        return q.empty();
     }
 };
 
 /**
- * Your MyStack object will be instantiated and called as such:
- * MyStack* obj = new MyStack();
- * obj->push(x);
- * int param_2 = obj->pop();
- * int param_3 = obj->top();
- * bool param_4 = obj->empty();
+ *Your MyStack object will be instantiated and called as such:
+ *MyStack* obj = new MyStack();
+ *obj->push(x);
+ *int param_2 = obj->pop();
+ *int param_3 = obj->top();
+ *bool param_4 = obj->empty();
  */
