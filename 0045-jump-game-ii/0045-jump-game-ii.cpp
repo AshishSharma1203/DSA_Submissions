@@ -11,7 +11,7 @@ class Solution
             if (dp[i] != -1)
                 return dp[i];
 
-            int ans = INT_MAX-1;
+            int ans = INT_MAX - 1;
 
             int max_steps = min(nums[i], (int) nums.size() - 1);
 
@@ -28,8 +28,28 @@ class Solution
     {
 
         int n = nums.size();
-        vector<int> dp(n, -1);
+       	//         vector<int> dp(n, -1);
 
-        return solve(0, nums, dp);
+       	//         return solve(0, nums, dp);
+
+       	// tabulation  
+
+        vector<int> dp(n, INT_MAX - 1);
+        dp[n - 1] = 0;
+
+        for (int i = n - 2; i >= 0; i--)
+        {
+            int max_steps = min(nums[i], n - 1);
+
+            for (int j = 1; j <= max_steps; j++)
+            {
+                if (i + j < n)
+                {
+                    dp[i] = min(dp[i], 1 + dp[i + j]);
+                }
+            }
+        }
+
+        return dp[0];
     }
 };
