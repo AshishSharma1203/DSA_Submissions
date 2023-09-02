@@ -23,7 +23,7 @@ class Solution
 
        	// approach 2 : use binary search 
 
-        // int low = 1, high = accumulate(piles.begin(), piles.end(), 0);
+        
            int low = 1, high = 1e9;
 
         int ans;
